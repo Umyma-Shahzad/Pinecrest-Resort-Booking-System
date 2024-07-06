@@ -1,0 +1,27 @@
+{% extends "base2.html" %}
+
+
+{% block content %}
+<div class="container mt-5">
+    <h2 class="text-center" style="color: white">Bookings</h2>
+    <div class="row">
+        {% for booking in bookings %}
+        <div class="col-md-6 mb-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">{{ booking.room_type }}</h5>
+                    <p class="card-text">
+                        <strong>Booking By:</strong> {{ booking.fullname }}<br>
+                        <strong>Room Type:</strong> {{ booking.room_type }}<br>
+                        <strong>Number of Rooms:</strong> {{ booking.number_of_rooms}}<br>
+                        <strong>Special Request:</strong> {{ booking.special_request }}<br>
+                        <strong>Check-in:</strong> {{ booking.checkin_date }}<br>
+                        <strong>Check-out:</strong> {{ booking.checkout_date }}<br>
+                    </p>
+                    
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+</div>
+{% endblock %}

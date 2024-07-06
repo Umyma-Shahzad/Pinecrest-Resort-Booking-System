@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Pinecrest Resort</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+            integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    
+            <style>
+                .hero {
+                    height: 100vh;
+                    background: url('https://alpinekpk.com/wp-content/uploads/2021/08/4.png') no-repeat center center;
+                    background-size: cover;
+                    position: relative;
+                }
+                .hero h1 {
+                    color: black;
+                    font-size: 4rem;
+                    font-weight: bold;
+                    text-align: center;
+                    position: absolute;
+                    top: 50%;
+                    left: 50%;
+                    transform: translate(-50%, -50%);
+                }
+            </style>
+        </head>
+
+    <body>
+        {% extends "base.html" %}
+
+        {% block content %}
+        <div class="     mt-5 ">
+            <div class="hero">
+                <h1>Pinecrest Resort</h1>
+            </div>
+            <h1 id="about" style="color:white;" class="text-center mt-5">About Us</h1>
+            <p style="color:white;" class="text-center">Immerse yourself in the captivating allure of Nathia Gali at Alpine Hotel, where scenic beauty converges with vibrant energy. Our boutique resort beckons you to an experience where modern amenities, enchanting event venues, and timeless ambiance seamlessly blend. Whether you’re seeking a getaway, a vacation, or a business trip, Alpine Hotel offers a haven that caters to all your desires.</p>
+
+            <h2  style="color:white;" class="text-center mt-5">Accommodations</h2>
+            <div class="row">
+                {% for room in rooms %}
+                <div class="col-md-6 mb-4">
+                    <div class="card bg-light   ">
+                        <img src="{{ room.image_url }}" class="card-img-top" alt="{{ room.name }}">
+                        <div class="card-body">
+                            <h5 class="card-title ">{{ room.name }}</h5>
+                            <a href="/rooms/{{ room._id }}" class="btn btn-primary">Details</a>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+
+            <h2 style="color:white;" class="text-center mt-5">Gallery</h2>
+            <div class="row" >
+                {% for room in rooms %}
+                <div class="col-md-3" style="height: 200px; margin-bottom: 10px; margin-top: 10px; overflow: hidden;">
+                    <img src="{{ room.image_url1 }}" style="height: 100%; width: 100%;" class="img-fluid" alt="...">
+                </div>
+                <div class="col-md-3"style="height: 200px;margin-bottom: 10px; margin-top: 10px; overflow: hidden;"">
+                    <img src="{{ room.image_url2}}" style="height: 100%; width: 100%;" class="img-fluid" alt="...">
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+
+        
+        {% endblock %}
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-MQB6TOaTrc+92n+TOEov9hqVPSuSaDwQ7PQJ65MGflFNVF90w2CNP1VzI5xEqhNh"
+            crossorigin="anonymous"></script>
+    </body>
+
+</html>

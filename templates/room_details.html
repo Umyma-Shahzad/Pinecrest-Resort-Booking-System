@@ -1,0 +1,77 @@
+{% extends "base.html" %}
+
+{% block title %}{{ room.name }} Details{% endblock %}
+
+{% block content %}
+<style>
+    .hero {
+        height: 100vh;
+        background: url('{{ room.image_url }}') no-repeat center center;
+        background-size: cover;
+        position: relative;
+    }
+
+    .hero h1 {
+        color: white;
+        font-size: 4rem;
+        font-weight: bold;
+        text-align: center;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+    }
+
+    .content-section {
+        padding: 50px 0;
+    }
+
+    .content-section h2 {
+        font-weight: bold;
+        text-align: center;
+    }
+
+    .content-section p {
+        text-align: justify;
+    }
+
+    .images-section img {
+        width: 100%;
+        height: auto;
+    }
+
+    .btn-booknow {
+        display: inline;
+        margin: 30px auto;
+        width: auto;
+        text-align: center;
+    }
+</style>
+
+
+<div class="hero">
+    <h1>{{ room.name }}</h1>
+</div>
+
+
+<div class="container content-section">
+    <h2 style="color: white">{{ room.tagline }}</h2>
+    <p style="color: white">{{ room.description }}</p>
+</div>
+
+<div class="container images-section">
+    <div class="row">
+        <div class="col-md-6">
+            <img src="{{ room.image_url1 }}" alt="Room Image 1" class="img-fluid">
+        </div>
+        <div class="col-md-6">
+            <img src="{{ room.image_url2 }}" alt="Room Image 2" class="img-fluid">
+        </div>
+    </div>
+</div>
+
+<div class="container">
+    <br>
+    <a href="/booknow" class="btn btn-primary btn-booknow">Book Now</a>
+</div>
+{% endblock %}

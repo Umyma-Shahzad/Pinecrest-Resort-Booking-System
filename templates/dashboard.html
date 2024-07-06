@@ -1,0 +1,97 @@
+{% extends "base2.html" %}
+{% block content %}
+<div class="container mt-5">
+    <h2 class="text-center" style="color:white">Dashboard</h2>
+    <div class="row">
+        {% for room in rooms %}
+        <div class="col-md-6 mb-4">
+            <div class="card">
+                <img src="{{ room.image_url }}" class="card-img-top" alt="{{ room.name }}">
+                <div class="card-body">
+                    <h5 class="card-title">{{ room.name }}</h5>
+                    <p class="card-text">Total Rooms: {{ room.total_rooms }}</p>
+                </div>
+
+                <!-- Update Form -->
+                <div class="update-form" style="display: none;">
+                    <form  action="/update-room/{{ room.id }}" method="post">
+                        <div class="mb-3">
+                            <label for="name" class="form-label">Name</label>
+                            <input type="text" class="form-control" id="name_{{ room.id }}" name="name" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="description" class="form-label">Description</label>
+                            <textarea class="form-control" id="description_{{ room.id }}" name="description"></textarea>
+                        </div>
+                        <div class="mb-3">
+                            <label for="total_rooms" class="form-label">Total Rooms</label>
+                            <input type="text" class="form-control" id="total_rooms_{{ room.id }}" name="total_rooms" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="tagline" class="form-label">Tagline</label>
+                            <input type="text" class="form-control" id="tagline_{{ room.id }}" name="tagline" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="image_url" class="form-label">Image URL</label>
+                            <input type="url" class="form-control" id="image_url_{{ room.id }}" name="image_url" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="image_url1" class="form-label">Image URL1</label>
+                            <input type="url" class="form-control" id="image_url1_{{ room.id }}" name="image_url1" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="image_url2" class="form-label">Image URL2</label>
+                            <input type="url" class="form-control" id="image_url2_{{ room.id }}" name="image_url2" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                    </form>
+                </div>
+                <!-- Update Button -->
+                <button class="btn btn-warning update-btn" style="margin: 10px; ">Update</button>
+                <!-- Delete Button -->
+                <form onsubmit="deleteRoom('{{ room.id }}'); return false;">
+                    <button type="submit" class="btn btn-danger" style="margin: 10px;">Delete</button>
+                </form>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+<script>
+ 
+   // Add event listener to update buttons
+   document.querySelectorAll( '.update-btn' ).forEach( button =>
+    {
+        button.addEventListener( 'click', () =>
+        {
+            // Toggle visibility of the sibling update-form div
+            button.parentElement.querySelector( '.update-form' ).style.display = 'block';
+        } );
+    } );
+   
+
+    // Function to delete room using Fetch API
+async function deleteRoom(roomId) {
+    try {
+        const response = await fetch(`/delete-room/${roomId}`, {
+            method: 'POST',
+        });
+
+        if (response.ok) {
+            const result = await response.json();
+            location.reload();
+            alert('Room deleted successfully');
+            
+        } else {
+            const result = await response.json();
+            alert(result.detail || 'An error occurred while deleting the room.');
+        }
+    } catch (error) {
+        console.error('Error deleting room:', error);
+        alert('An error occurred while deleting the room.');
+    }
+}
+
+</script>
+{% endblock %}

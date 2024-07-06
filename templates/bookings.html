@@ -1,0 +1,88 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2 class="text-center" style="color:white">Your Bookings</h2>
+    <div class="row">
+        {% for booking in bookings %}
+        <div class="col-md-6 mb-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">{{ booking.room_type }}</h5>
+                    <p class="card-text">
+                        <strong>Booking By:</strong> {{ booking.fullname }}<br>
+                        <strong>Room Type:</strong> {{ booking.room_type }}<br>
+                        <strong>Number of Rooms:</strong> {{ booking.number_of_rooms}}<br>
+                        <strong>Special Request:</strong> {{ booking.special_request }}<br>
+                        <strong>Check-in:</strong> {{ booking.checkin_date }}<br>
+                        <strong>Check-out:</strong> {{ booking.checkout_date }}<br>
+                    </p>
+                    <!-- Update Form -->
+                    <div class="update-form" style="display: none;">
+                        <form action="/update-booking/{{ booking.id }}" method="post">
+                            <div class="mb-3">
+                                <label for="fullname" class="form-label">Full Name</label>
+                                <input type="text" class="form-control" id="fullname" name="fullname" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="phone_number" class="form-label">Phone Number</label>
+                                <input type="text" class="form-control" id="phone_number" name="phone_number" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="email" class="form-label">Email</label>
+                                <input type="email" class="form-control" id="email" name="email" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="checkin_date" class="form-label">Check-in Date</label>
+                                <input type="date" class="form-control" id="checkin_date" name="checkin_date" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="checkout_date" class="form-label">Check-out Date</label>
+                                <input type="date" class="form-control" id="checkout_date" name="checkout_date"
+                                    required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="room_type" class="form-label">Room Type</label>
+                                <select class="form-control" id="room_type" name="room_type" required>
+                                    {% for room in rooms %}
+                                    <option value="{{ room.name }}">{{ room.name }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            <div class="mb-3">
+                                <label for="number_of_rooms" class="form-label">Number of Rooms</label>
+                                <input type="number" class="form-control" id="number_of_rooms" name="number_of_rooms"
+                                    required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="special_request" class="form-label">Special Request</label>
+                                <textarea class="form-control" id="special_request" name="special_request"></textarea>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Submit</button>
+                        </form>
+                    </div>
+                    <!-- Update Button -->
+                    <button class="btn btn-warning update-btn" style="margin: 10px;">Update</button>
+                    <!-- Delete Button -->
+                    <form action="/cancel-booking/{{ booking.id }}" method="post">
+                        <button type="submit" class="btn btn-danger" style="margin: 10px;">Delete</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+<script>
+    // Add event listener to update buttons
+    document.querySelectorAll( '.update-btn' ).forEach( button =>
+    {
+        button.addEventListener( 'click', () =>
+        {
+            // Toggle visibility of the sibling update-form div
+            button.parentElement.querySelector( '.update-form' ).style.display = 'block';
+        } );
+    } );
+</script>
+{% endblock %}
